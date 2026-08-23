@@ -8,7 +8,7 @@ import { createColumns } from './columns.js';
 import { loadJobsProgressive, updateStats } from './jobs_loader.js';
 import { filterJobs, clearFilterInputs } from './filters.js';
 import { render } from './renderer.js';
-import { updateURL, loadFromURL } from './url_state.js';
+import { updateURL, loadFromURL, DEFAULT_POSTED } from './url_state.js';
 import { setupEventListeners } from './events.js';
 import { sortJobs } from './sort_logic.js';
 import { toggleView, updateHeatmapIfVisible } from './map_view.js';
@@ -27,7 +27,7 @@ class JobBoardApp {
 
         this.filterState = {
             title: '', company: '', location: '', status: '',
-            ats: '', skill_level: '', remoteOnly: false
+            ats: '', skill_level: '', remoteOnly: false, posted: DEFAULT_POSTED
         };
 
         this.debounceTimer = null;
@@ -97,11 +97,9 @@ class JobBoardApp {
 
     clearFilters() {
         clearFilterInputs();
-        this.filterState = {
-            title: '', company: '', location: '', status: '',
-            ats: '', skill_level: '', remoteOnly: false
-        };
-        this.filteredJobs = [...this.allJobs];
+        const { filteredJobs, filterState } = filterJobs(this.allJobs);
+        this.filterState = filterState;
+        this.filteredJobs = filteredJobs;
         this.currentPage = 1;
         this.sortedJobs = null;
         updateURL(this.filterState, this.currentPage, this.sortState);

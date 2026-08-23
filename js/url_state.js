@@ -2,6 +2,9 @@
 // URL STATE MANAGEMENT
 // ============================================================
 
+/** Default "Date Posted" window (in days) applied on a fresh page load */
+export const DEFAULT_POSTED = '3';
+
 /**
  * Sync current filter/sort/page state to the URL query string.
  * @param {object} filterState
@@ -21,6 +24,10 @@ export function updateURL(filterState, currentPage, sortState) {
     if (filterState.skill_level && filterState.skill_level.length) params.set('skill_level', filterState.skill_level.join(','));
     if (filterState.exclude) params.set('exclude', filterState.exclude)
     if (filterState.include) params.set('include', filterState.include)
+    // Only carry `posted` in the URL when it differs from the default window
+    if ((filterState.posted ?? DEFAULT_POSTED) !== DEFAULT_POSTED) {
+        params.set('posted', filterState.posted || 'any');
+    }
     if (currentPage > 1) params.set('page', currentPage.toString());
 
     if (sortState.key) {
@@ -53,6 +60,8 @@ export function loadFromURL() {
     const skillLevel = params.get('skill_level') || '';
     const exclude = params.get('exclude') || '';
     const include = params.get('include') || '';
+    const postedParam = params.get('posted');
+    const posted = postedParam === null ? DEFAULT_POSTED : (postedParam === 'any' ? '' : postedParam);
 
     document.getElementById('filter-title').value = title;
     document.getElementById('filter-company').value = company;
@@ -73,8 +82,9 @@ export function loadFromURL() {
 
     document.getElementById('filter-exclude').value = exclude;
     document.getElementById('filter-include').value = include;
+    document.getElementById('filter-posted').value = posted;
 
-    const hasFilters = !!(title || company || location || salary || remote || status || ats || skillLevel || exclude || include);
+    const hasFilters = !!(title || company || location || salary || remote || status || ats || skillLevel || exclude || include || posted);
 
     const sortKey = params.get('sort_key') || null;
     const sortDir = params.get('sort_dir') || 'asc';

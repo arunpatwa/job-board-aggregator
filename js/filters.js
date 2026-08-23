@@ -4,6 +4,7 @@
 
 import { escapeRegex } from './ui_utils.js';
 import { loadApplicationStatus } from './storage.js';
+import { DEFAULT_POSTED } from './url_state.js';
 
 function splitCsv(s) {
     return s.split(',').map(t => t.trim()).filter(Boolean);
@@ -160,7 +161,7 @@ export function clearFilterInputs() {
     document.getElementById('filter-status').value = '';
     Array.from(document.getElementById('filter-ats').options).forEach(o => o.selected = false);
     Array.from(document.getElementById('filter-skill-level').options).forEach(o => o.selected = false);
-    document.getElementById('filter-posted').value = '';
+    document.getElementById('filter-posted').value = DEFAULT_POSTED;
     document.getElementById('filter-hide-recruiters').checked = true;
     document.getElementById('filter-remote-only').checked = false;
     document.getElementById('filter-hide-applied').checked = false;

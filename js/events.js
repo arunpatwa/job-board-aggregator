@@ -83,6 +83,7 @@ export function setupEventListeners(app) {
     document.getElementById('filter-status').addEventListener('change', () => app.applyFilters());
     document.getElementById('filter-ats').addEventListener('change', () => app.applyFilters());
     document.getElementById('filter-skill-level').addEventListener('change', () => app.applyFilters());
+    document.getElementById('filter-posted').addEventListener('change', () => app.applyFilters());
     document.getElementById('filter-hide-applied').addEventListener('change', () => app.applyFilters());
 
     // ── Batch processing ─────────────────────────────────────
