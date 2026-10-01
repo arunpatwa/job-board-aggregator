@@ -4,6 +4,7 @@
 
 import { escape } from './ui_utils.js';
 import { loadApplicationStatus } from './storage.js';
+import { renderResumeButton } from './resume_helper.js';
 
 /** Build and return the column definitions for the job table */
 export function createColumns() {
@@ -49,7 +50,7 @@ export function createColumns() {
             render: job => {
                 const url = job.absolute_url || job.url;
                 return url
-                    ? `<a href="${escape(url)}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary">Apply</a>`
+                    ? `<a href="${escape(url)}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary">Apply</a>${renderResumeButton(job)}`
                     : 'N/A';
             }
         },

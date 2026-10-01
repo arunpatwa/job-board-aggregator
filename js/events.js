@@ -4,6 +4,7 @@
 
 import { escape, showToast, updateFABVisibility } from './ui_utils.js';
 import { saveApplicationStatus, deleteApplicationStatus } from './storage.js';
+import { handleResumeClick } from './resume_helper.js';
 
 const ACTION_CHECKBOXES = ['.save-checkbox', '.apply-checkbox', '.ignored-checkbox'];
 
@@ -112,6 +113,12 @@ export function setupEventListeners(app) {
                 if (other) other.checked = false;
             }
         });
+    });
+
+    // ── Delegated: tailored resume button ────────────────────
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('.resume-btn');
+        if (btn) handleResumeClick(btn);
     });
 
     const filterCollapse = document.getElementById('filter-controls');

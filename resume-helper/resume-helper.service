@@ -1,0 +1,12 @@
+[Unit]
+Description=Job board resume helper (tailors resumes with Claude Code)
+After=network-online.target
+
+[Service]
+ExecStart=/usr/bin/python3 %h/Downloads/Projects/job-board-aggregator/resume-helper/server.py
+# claude lives in ~/.local/bin, which systemd's default PATH does not include
+Environment=PATH=%h/.local/bin:/usr/local/bin:/usr/bin:/bin
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

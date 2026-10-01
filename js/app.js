@@ -12,6 +12,7 @@ import { updateURL, loadFromURL, DEFAULT_POSTED } from './url_state.js';
 import { setupEventListeners } from './events.js';
 import { sortJobs } from './sort_logic.js';
 import { toggleView, updateHeatmapIfVisible } from './map_view.js';
+import { initResumeHelper } from './resume_helper.js';
 
 class JobBoardApp {
     constructor() {
@@ -37,6 +38,7 @@ class JobBoardApp {
 
     // ── Initialization ───────────────────────────────────────────
     async init() {
+        initResumeHelper();
         await this.loadJobs();
         setupEventListeners(this);
         this.loadFromURL();

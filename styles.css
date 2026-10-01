@@ -394,6 +394,16 @@ body.map-mode .filter-panel {
     padding: 4px 8px;
 }
 
+/* Tailored-resume button: only shown when the local helper answers */
+.resume-btn {
+    display: none;
+    min-width: 72px;
+}
+
+.resume-helper-online .resume-btn {
+    display: inline-block;
+}
+
 .job-table th,
 .job-table td {
     text-align: center;
