@@ -588,17 +588,6 @@ thead.sorting-locked th,
     cursor: pointer;
 }
 
-.donate-section {
-    text-align: center;
-    padding: 20px;
-    font-size: 14px;
-    color: #666;
-}
-
-.paypal-donate-form {
-    margin-top: 10px;
-}
-
 .mobile-sort-bar {
     display: none;
 }
