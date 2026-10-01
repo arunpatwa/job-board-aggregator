@@ -6,6 +6,23 @@
 export const DEFAULT_POSTED = '3';
 
 /**
+ * Filters and sort applied when the page is opened without any filter params
+ * (e.g. the bare site URL). Any filter param in the URL replaces all of these.
+ */
+const DEFAULT_QUERY = new URLSearchParams({
+    title: 'software engineer, backend, associate software, mts, member of technical',
+    location: 'india, noida, gurgaon, gurugam, bengaluru, mumbai, pune,delhi,bangalore',
+    ats: 'Ashby,Bamboohr,Greenhouse,Lever,Workday,iCIMS,Paylocity',
+    skill_level: 'entry,mid',
+    exclude: 'senior, staff, devops, platform, sre',
+    sort_key: 'posted',
+    sort_dir: 'desc',
+}).toString();
+
+const STATE_KEYS = ['title', 'company', 'location', 'salary', 'remote', 'status', 'ats',
+    'skill_level', 'exclude', 'include', 'posted', 'page', 'sort_key', 'sort_dir'];
+
+/**
  * Sync current filter/sort/page state to the URL query string.
  * @param {object} filterState
  * @param {number} currentPage
@@ -47,7 +64,8 @@ export function updateURL(filterState, currentPage, sortState) {
  * @returns {{ hasFilters: boolean, page: number }}
  */
 export function loadFromURL() {
-    const params = new URLSearchParams(window.location.search);
+    let params = new URLSearchParams(window.location.search);
+    if (!STATE_KEYS.some(k => params.has(k))) params = new URLSearchParams(DEFAULT_QUERY);
 
     const title = params.get('title') || '';
     const company = params.get('company') || '';
